@@ -1,4 +1,3 @@
-
 // Setup
 var collection = {
     "2548": {
@@ -30,31 +29,27 @@ var collectionCopy = JSON.parse(JSON.stringify(collection));
 
 // Only change code below this line
 function updateRecords(id, prop, value) {
-  //set id
-  collection[id] = {};
-  var propVar = "tracks";
-
-   if (prop !== propVar && value !== ""){
-     //1.
-     collection[id][prop] = value;
-   }
-   if (!collection[id].hasOwnProperty(propVar)){
-     //2.
-     collection[id][propVar] = [];
-   }
+   var propVar = "tracks";
+  switch(true){
+    case (!collection[id]):collection[id] = {};
+    break;
+    case (prop !== propVar && value === ""): delete collection[id].artist;
+    break;
+    case (prop !== propVar && value !== ""): collection[id][prop] = value;
+    break;
+    case (!collection[id][propVar]): collection[id][propVar] = [];
+    break;
+    case (value ===""):  delete collection[id][propVar];
+    break;
+  }
+  //this won't work inside case...
    if (prop === propVar && value !==""){
-     //3.
-     collection[id][propVar].push(value);
+     collection[id].tracks.push(value);
    }
-    if (value ===""){
-     //4.
-     delete collection[id][propVar];
-   }
-
-
 
   return collection;
+
 }
 
 // Alter values below to test your code
-updateRecords(2468, "tracks", "Free");
+updateRecords(2548, "artist", "");
